@@ -4,6 +4,7 @@ import sys
 import argparse
 from collections import Counter
 from fake import Fake
+from tweetGenerator import TweetGenerator
 
 consumer_key = "x"
 consumer_secret = "x"
@@ -26,7 +27,13 @@ def main():
 	#test.write()
 	#test.spoofProfile(api)
 	#test.getMentions(api)
-	test.getTweets(api)
+	tweet = test.getTweets(api)
+	txt = tweet
+
+	fakeT = TweetGenerator(txt)
+	testTweet = fakeT.setup(txt)
+	print(testTweet)
+
 
 
 if __name__ == "__main__":
