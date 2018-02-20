@@ -1,4 +1,5 @@
 import re
+from collections import Counter
 
 class Fake():
 # fake human class
