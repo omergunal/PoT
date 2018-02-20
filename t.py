@@ -22,16 +22,15 @@ def main():
 	username = sys.argv[1]
 	user = api.get_user(username)
 
-	test = Fake(user)
-	#test.write()
-	#test.spoofProfile(api)
-	#test.getMentions(api)
-	tweet = test.getTweets(api)
-	txt = tweet
+	target = Fake(user)
+	target.getMentions(api)
+	spoofAccount = input("Select account: ")
 
-	fakeT = TweetGenerator(txt)
-	testTweet = fakeT.setup(txt)
-	print(testTweet)
+	spoofAc = Fake(api.get_user(spoofAccount))
+	tweets = spoofAc.getTweets(api)
+	fakeTweetGenerator = TweetGenerator(tweets)
+	fakeTweet = fakeTweetGenerator.setup(tweets)
+	print(fakeTweet)
 
 
 
