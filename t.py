@@ -4,7 +4,6 @@ import sys
 import argparse
 from collections import Counter
 from fake import Fake
-from tweetGenerator import TweetGenerator
 
 consumer_key = "x"
 consumer_secret = "x"
