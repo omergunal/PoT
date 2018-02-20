@@ -1,4 +1,5 @@
 import re
+import os
 from collections import Counter
 
 class Fake():
@@ -16,7 +17,7 @@ class Fake():
 		self.location = user.location
 		self.lang = user.lang
 		self.profilePic = "https://twitter.com/"+user.screen_name+"/profile_image?size=original"
-		self.banner = user.profile_banner_url
+		#self.banner = user.profile_banner_url
 
 	def write(self):
 		print(self.username)
@@ -32,7 +33,7 @@ class Fake():
 		os.system("wget -O banner.jpg " + self.banner)
 		api.update_profile(self.name, "", self.location, self.description)
 		api.update_profile_image("profile.jpg")
-		api.update_profile_banner("banner.jpg")
+		#api.update_profile_banner("banner.jpg")
 
 	def getMentions(self, api):
 		allTweets = ""
