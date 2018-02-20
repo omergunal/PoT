@@ -25,13 +25,21 @@ def main():
 	target = Fake(user)
 	target.getMentions(api)
 	spoofAccount = input("Select account: ")
+	url = input("Phising URL: ")
 
 	spoofAc = Fake(api.get_user(spoofAccount))
+	spoofAc.spoofProfile(api)
+
 	tweets = spoofAc.getTweets(api)
 	fakeTweetGenerator = TweetGenerator(tweets)
 	fakeTweet = fakeTweetGenerator.setup(tweets)
-	print(fakeTweet)
+	fakeTweet = ".@{} {} {} .".format(username,fakeTweet, url)
 
+	print("***********************")
+	print(fakeTweet)
+	print("***********************")
+
+	api.update_status(fakeTweet)
 
 
 if __name__ == "__main__":
