@@ -5,7 +5,7 @@
 
 * 1- Collect data from target's twitter account
 * 2- Find target's friend and copy her/him account
-* 3- Generate tweet automatically and send it
+* 3- Generate tweet automatically with markov chain algorithm and send it
 
 ### Installation
 ```
