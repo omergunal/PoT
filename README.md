@@ -14,7 +14,7 @@ git clone https://github.com/omergunal/PoT
 cd PoT
 pip3 install -r requirements.txt
 ```
-Update your api keys in "twebit.py". Go to https://apps.twitter.com/ and get API keys
+Update your api keys in "PoT.py". Go to https://apps.twitter.com/ and get API keys
 
 ### Usage
 ```
