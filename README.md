@@ -4,8 +4,8 @@
 ### How it works?
 
 * 1- Collect data from target's twitter account
-* 2- Find target's friend and copy her/him account.
-* 3- Write a tweet like her/him
+* 2- Find target's friend and copy her/him account
+* 3- Generate tweet automatically and send it
 
 ### Installation
 ```
