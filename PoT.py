@@ -28,6 +28,7 @@ def main():
 	target.getMentions(api)
 	spoofAccount = input("Select account: ")
 	url = input("Phising URL: ")
+	print("\n\n")
 
 	spoofAc = Fake(api.get_user(spoofAccount))
 	spoofAc.spoofProfile(api)
