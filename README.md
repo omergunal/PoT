@@ -1,4 +1,5 @@
 # Phishing on Twitter
+## Generate tweet automatically like him/her
 ![graph1](https://github.com/omergunal/T/blob/master/img/1.png)
 ![t3](https://github.com/omergunal/PoT/blob/master/img/t3.png)
 ### How it works?
