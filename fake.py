@@ -1,6 +1,9 @@
 import re
 import os
 from collections import Counter
+from termcolor import colored
+
+
 
 class Fake():
 # fake human class
@@ -16,7 +19,7 @@ class Fake():
 		self.created = str(user.created_at)
 		self.location = user.location
 		self.lang = user.lang
-		self.profilePic = "https://twitter.com/"+user.screen_name+"/profile_image?size=original"
+		self.profilePic = "https://twitter.com/" + user.screen_name + "/profile_image?size=original"
 		#self.banner = user.profile_banner_url
 
 	def write(self):
@@ -25,15 +28,15 @@ class Fake():
 		print(self.description)
 		print(self.tweetCount)
 		print(self.following)
-		print(self.banner)
+		#print(self.banner)
 
 	def spoofProfile(self, api):
 		# update fake profile from original
 		os.system("wget -O profile.jpg "+ "https://twitter.com/"+self.username+"/profile_image?size=original")
-		#os.system("wget -O banner.jpg " + self.banner)
+	#	os.system("wget -O banner.jpg " + self.banner)
 		api.update_profile(self.name, "", self.location, self.description)
 		api.update_profile_image("profile.jpg")
-		#api.update_profile_banner("banner.jpg")
+	#	api.update_profile_banner("banner.jpg")
 
 	def getMentions(self, api):
 		allTweets = ""
@@ -47,13 +50,21 @@ class Fake():
 			if mention[:1] == "@": #filter mentions
                                mentionList.append(mention)
 		countMention = Counter(mentionList)
-		print("Best accounts for deceiving the target")
-		print("***********************")
-		print(countMention.most_common(5))
-		print("***********************")
-		print(allTweets)
+		mentionList = countMention.most_common(5) # top 5 mention list
+
+		if not mentionList: # if mention list is empty
+			print("\n***********************")
+			print("I couldn't find any account for spoofing")
+			print("***********************")
+		else:
+			print("\nBest accounts for deceiving the target \n")
+			print("***********************")
+			for x in mentionList:
+				print(colored(x[0] + str(" #"*x[1]), 'yellow'))
+			print("***********************")
 
 	def getTweets(self, api):
+		print(colored("Collecting data...", 'yellow'))
 		allTweets = ""
 		public_tweets = api.user_timeline(screen_name = self.username,count = 500)
 		for tweet in public_tweets: # get tweets
@@ -61,5 +72,5 @@ class Fake():
 			tweet.text = re.sub(r"RT", "", tweet.text) # remote "RT" text
 			tweet.text = re.sub(r'[\^@*][^\W]*', '', tweet.text) # remove @
 
-			print(tweet.text)
 			allTweets += tweet.text
+		return(allTweets)
