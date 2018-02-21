@@ -2,8 +2,9 @@ import tweepy
 import os
 import sys
 import argparse
-from collections import Counter
 from fake import Fake
+from tweetGenerator import TweetGenerator
+from termcolor import colored
 
 consumer_key = "x"
 consumer_secret = "x"
@@ -17,10 +18,11 @@ def main():
 		auth.get_authorization_url()
 		api = tweepy.API(auth)
 	except tweepy.TweepError:
-		print ('Hata')
+		print ('Error')
 
 	username = sys.argv[1]
 	user = api.get_user(username)
+
 
 	target = Fake(user)
 	target.getMentions(api)
@@ -35,11 +37,12 @@ def main():
 	fakeTweet = fakeTweetGenerator.setup(tweets)
 	fakeTweet = ".@{} {} {} .".format(username,fakeTweet, url)
 
-	print("***********************")
-	print(fakeTweet)
+	print("\n***********************")
+	print("This fake tweet has been sent:")
+	print(colored(fakeTweet, 'green'))
 	print("***********************")
 
-	api.update_status(fakeTweet)
+	api.update_status(fakeTweet) # send tweet
 
 
 if __name__ == "__main__":
