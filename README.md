@@ -25,3 +25,6 @@ python3 pot.py [target_account_name]
 ![t1](https://github.com/omergunal/PoT/blob/master/img/t1.png)
 ![t2](https://github.com/omergunal/PoT/blob/master/img/t2.png)
 ![t3](https://github.com/omergunal/PoT/blob/master/img/t3.png)
+
+# !
+Don't use for illegal activity
