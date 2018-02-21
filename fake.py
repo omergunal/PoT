@@ -30,7 +30,7 @@ class Fake():
 	def spoofProfile(self, api):
 		# update fake profile from original
 		os.system("wget -O profile.jpg "+ "https://twitter.com/"+self.username+"/profile_image?size=original")
-		os.system("wget -O banner.jpg " + self.banner)
+		#os.system("wget -O banner.jpg " + self.banner)
 		api.update_profile(self.name, "", self.location, self.description)
 		api.update_profile_image("profile.jpg")
 		#api.update_profile_banner("banner.jpg")
