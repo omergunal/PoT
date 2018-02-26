@@ -27,7 +27,7 @@ def main():
 	target = Fake(user)
 	target.getMentions(api)
 	spoofAccount = input("Select account: ")
-	url = input("Phising URL: ")
+	url = input("Phishing URL: ")
 	print("\n\n")
 
 	spoofAc = Fake(api.get_user(spoofAccount))
