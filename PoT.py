@@ -1,72 +1,74 @@
-#MIT License
+#!/usr/bin/env python3
 
-#Copyright (c) 2018 Ömer Günal
-
-#Permission is hereby granted, free of charge, to any person obtaining a copy
-#of this software and associated documentation files (the "Software"), to deal
-#in the Software without restriction, including without limitation the rights
-#to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-#copies of the Software, and to permit persons to whom the Software is
-#furnished to do so, subject to the following conditions:
-
-#The above copyright notice and this permission notice shall be included in all
-#copies or substantial portions of the Software.
-
-#THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-#IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-#FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-#LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-#SOFTWARE.
 
 import tweepy
 import os
-import sys
 import argparse
+import configparser
 from fake import Fake
 from tweetGenerator import TweetGenerator
 from termcolor import colored
 
-consumer_key = "x"
-consumer_secret = "x"
-access_key = "x-x"
-access_secret = "x"
+hardreturn = '\n'
+que = colored('[?] ', 'blue')
+bad = colored('[-] ', 'red')
+good = colored('[+] ', 'green')
+run = colored('[~] ', 'yellow')
+
 
 def main():
-	try:
-		auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-		auth.set_access_token(access_key, access_secret)
-		auth.get_authorization_url()
-		api = tweepy.API(auth)
-	except tweepy.TweepError:
-		print ('Error')
+    try:
+        config = configparser.RawConfigParser()
+        config.read(os.path.join(os
+                                 .path.dirname(__file__), 'PoT.cfg'))
+        consumer_key = config.get('twitter_api', 'consumer_key')
+        consumer_secret = config.get('twitter_api', 'consumer_secret')
+        access_token_key = config.get('twitter_api', 'access_token_key')
+        access_token_secret = config.get('twitter_api', 'access_token_secret')
 
-	username = sys.argv[1]
-	user = api.get_user(username)
+        parser = argparse.ArgumentParser(description='Phishing on Twitter')
+        parser.add_argument('-u', '--username', help='username to phish with ')
+        args = parser.parse_args()
 
+        try:
+            auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+            auth.set_access_token(access_token_key, access_token_secret)
+            auth.get_authorization_url()
+            api = tweepy.API(auth)
+        except tweepy.TweepError:
+            print(bad + 'Authentication Error')
+            exit(1)
 
-	target = Fake(user)
-	target.getMentions(api)
-	spoofAccount = input("Select account: ")
-	url = input("Phishing URL: ")
-	print("\n\n")
+        if args.username:
+            username = args.username
+        else:
+            parser, print_help()
+        user = api.get_user(username)
 
-	spoofAc = Fake(api.get_user(spoofAccount))
-	spoofAc.spoofProfile(api)
+        target = Fake(user)
+        target.getMentions(api)
+        spoofAccount = input(que + "Select account: ")
+        url = input(que + "Phishing URL: ")
+        print(hardreturn * 2)
 
-	tweets = spoofAc.getTweets(api)
-	fakeTweetGenerator = TweetGenerator(tweets)
-	fakeTweet = fakeTweetGenerator.setup(tweets)
-	fakeTweet = ".@{} {} {} .".format(username,fakeTweet, url)
+        spoofAc = Fake(api.get_user(spoofAccount))
+        spoofAc.spoofProfile(api)
 
-	print("\n***********************")
-	print("This fake tweet has been sent:")
-	print(colored(fakeTweet, 'green'))
-	print("***********************")
+        tweets = spoofAc.getTweets(api)
+        fakeTweetGenerator = TweetGenerator(tweets)
+        fakeTweet = fakeTweetGenerator.setup(tweets)
+        fakeTweet = ".@{} {} {} .".format(username, fakeTweet, url)
 
-	api.update_status(fakeTweet) # send tweet
+        print(hardreturn)
+        print("***********************")
+        print("This fake tweet has been sent:")
+        print(colored(fakeTweet, 'green'))
+        print("***********************")
+
+        api.update_status(fakeTweet)  # send tweet
+    except Exception as e:
+        print(bad + str(e))
 
 
 if __name__ == "__main__":
-	main()
+    main()
