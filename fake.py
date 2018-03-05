@@ -48,7 +48,7 @@ class Fake():
             self.profilePic, os.path.join(self.profilePath, 'profile.jpg'))
 
         api.update_profile(self.name, "", self.location, self.description)
-        api.update_profile_image("profile.jpg")
+        api.update_profile_image(os.path.join(self.profilePath, 'profile.jpg'))
 
         # api.update_profile_banner("banner.jpg")
 
