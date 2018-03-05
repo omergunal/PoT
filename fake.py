@@ -83,7 +83,7 @@ class Fake():
         public_tweets = api.user_timeline(screen_name=self.username, count=500)
         for tweet in public_tweets:  # get tweets
             tweet.text = re.sub(r"http\S+", "", tweet.text)  # remove URLs
-            tweet.text = re.sub(r"RT", "", tweet.text)  # remote "RT" text
+            tweet.text = re.sub(r"RT", "", tweet.text)  # remove "RT" text
             tweet.text = re.sub(r'[\^@*][^\W]*', '', tweet.text)  # remove @
 
             allTweets += tweet.text
