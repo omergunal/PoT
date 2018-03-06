@@ -28,7 +28,7 @@ python3 PoT.py -u username
 
 ### ScreenShots
 
-![t1](https://github.com/omergunal/PoT/blob/master/img/t1.png) ![t2](https://github.com/omergunal/PoT/blob/master/img/t2.png) ![t3](https://github.com/omergunal/PoT/blob/master/img/t3.png)
+![t1](https://github.com/omergunal/PoT/blob/master/img/2.png) ![t2](https://github.com/omergunal/PoT/blob/master/img/t2.png) ![t3](https://github.com/omergunal/PoT/blob/master/img/t3.png)
 
 # !
 
