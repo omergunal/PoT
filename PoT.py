@@ -42,7 +42,7 @@ def main():
         if args.username:
             username = args.username
         else:
-            parser, print_help()
+            print("There is a mistake about username")
         user = api.get_user(username)
 
         target = Fake(user)
