@@ -19,8 +19,7 @@ run = colored('[~] ', 'yellow')
 def main():
     try:
         config = configparser.RawConfigParser()
-        config.read(os.path.join(os
-                                 .path.dirname(__file__), 'PoT.cfg'))
+        config.read(os.path.join(os.path.dirname(__file__), 'PoT.cfg'))
         consumer_key = config.get('twitter_api', 'consumer_key')
         consumer_secret = config.get('twitter_api', 'consumer_secret')
         access_token_key = config.get('twitter_api', 'access_token_key')
