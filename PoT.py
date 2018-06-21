@@ -15,15 +15,31 @@ bad = colored('[-] ', 'red')
 good = colored('[+] ', 'green')
 run = colored('[~] ', 'yellow')
 
+def CreateProfile(name):
+    f = open(name, 'w+');
+    f.write('[twitter_api]\n')
+    f.write('consumer_key = ' + input("Consumer Key: ") + ' \n')
+    f.write('consumer_secret = ' + input("Consumer Secret: ") + ' \n')
+    f.write('access_token_key = ' + input("Access Token Key: ") + ' \n')
+    f.write('access_token_secret = ' + input("Access Token Secret: ") + ' \n')
+    print("Config file created, please restart the program.")
 
 def main():
     try:
+        config_profile = ''
         config = configparser.RawConfigParser()
-        config.read(os.path.join(os.path.dirname(__file__), 'PoT.cfg'))
-        consumer_key = config.get('twitter_api', 'consumer_key')
-        consumer_secret = config.get('twitter_api', 'consumer_secret')
-        access_token_key = config.get('twitter_api', 'access_token_key')
-        access_token_secret = config.get('twitter_api', 'access_token_secret')
+        config_profile = input("What is the name of the profile you want to use?:")
+        config_profile += '.cfg'
+        config.read(os.path.join(os.path.dirname(__file__), config_profile))
+        try:
+            consumer_key = config.get('twitter_api', 'consumer_key')
+            consumer_secret = config.get('twitter_api', 'consumer_secret')
+            access_token_key = config.get('twitter_api', 'access_token_key')
+            access_token_secret = config.get('twitter_api', 'access_token_secret')
+        except configparser.Error as e:
+            print(bad + str(e))
+            CreateProfile(config_profile)
+            exit(1)
 
         parser = argparse.ArgumentParser(description='Phishing on Twitter')
         parser.add_argument('-u', '--username', help='username to phish with ')
